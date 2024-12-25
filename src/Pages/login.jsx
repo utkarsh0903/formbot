@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../services";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -41,6 +42,7 @@ const Login = () => {
             })
           }
           placeholder="Enter your email"
+          required
         />
         <label htmlFor="password">Password</label>
         <input
@@ -54,6 +56,7 @@ const Login = () => {
             })
           }
           placeholder="**********"
+          required
         />
         <button type="submit">Log In</button>
       </form>
@@ -63,7 +66,7 @@ const Login = () => {
         <span>Sign In with Google</span>
       </button>
     <div>
-        <p>Don't have an account ? Register Now</p>
+        <p>Don't have an account ?<Link to="/register"> Register Now</Link></p>
     </div>
     </>
   );

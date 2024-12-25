@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { register } from "../services";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -45,6 +46,7 @@ const Register = () => {
             })
           }
           placeholder="Enter a username"
+          required
         />
         <label htmlFor="email">Email</label>
         <input
@@ -58,6 +60,7 @@ const Register = () => {
             })
           }
           placeholder="Enter your email"
+          required
         />
         <label htmlFor="password">Password</label>
         <input
@@ -71,6 +74,7 @@ const Register = () => {
             })
           }
           placeholder="**********"
+          required
         />
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input
@@ -84,6 +88,7 @@ const Register = () => {
             })
           }
           placeholder="**********"
+          required
         />
         <button type="submit">Sign Up</button>
       </form>
@@ -93,7 +98,7 @@ const Register = () => {
         <span>Sign Up with Google</span>
       </button>
     <div>
-        <p>Already have an account ? Login</p>
+        <p>Already have an account ?<Link to="/login"> Login</Link></p>
     </div>
     </>
   );
