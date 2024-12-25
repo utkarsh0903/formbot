@@ -1,10 +1,13 @@
 import React from "react";
+import "../styles/home.css";
 import { Link } from "react-router-dom";
 import heroBanner from "../assets/heroBanner.svg";
 import hero1 from "../assets/hero-1.svg";
 import hero2 from "../assets/hero-2.svg";
 import logo from "../assets/Logo.svg";
 import shareLink from "../assets/ShareLink.svg";
+import blueBgBlur from "../assets/blueBgBlur.svg";
+import orangeBgBlur from "../assets/orangeBgBlur.svg";
 
 
 const Home = () => {
@@ -45,6 +48,8 @@ const Home = () => {
           </div>
         </div>
         <div className="hero-section-image">
+            <img src={orangeBgBlur} alt="Orange Blur" />
+            <img src={blueBgBlur} alt="Blue Blur" />
           <img src={heroBanner} alt="Detailed Banner" />
         </div>
       </div>
