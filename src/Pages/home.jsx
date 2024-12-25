@@ -1,12 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import heroBanner from "../assets/heroBanner.svg";
+import hero1 from "../assets/hero-1.svg";
+import hero2 from "../assets/hero-2.svg";
+import logo from "../assets/Logo.svg";
+import shareLink from "../assets/ShareLink.svg";
+
 
 const Home = () => {
   return (
     <div className="home-page">
       <div className="top-nav-bar">
         <div className="logo">
-          <img src="" alt="" />
+          <img src={logo} alt="Logo" />
           <h4>FormBot</h4>
         </div>
         <div className="right-nav-bar">
@@ -20,8 +26,8 @@ const Home = () => {
       </div>
       <div className="hero-section">
         <div className="hero-top-container">
-          <img src="" alt="" />
-          <img src="" alt="" />
+          <img src={hero1} alt="Hero Image 1" />
+          <img src={hero2} alt="Hero Image 2" />
           <div className="hero-heading">
             <h1>Build advanced chatbots visually</h1>
           </div>
@@ -39,13 +45,13 @@ const Home = () => {
           </div>
         </div>
         <div className="hero-section-image">
-          <img src="" alt="" />
+          <img src={heroBanner} alt="Detailed Banner" />
         </div>
       </div>
       <div className="footer">
         <div className="left-navbar">
           <div className="footer-logo">
-            <img src="" alt="" />
+            <img src={logo} alt="Logo" />
             <h4>FormBot</h4>
           </div>
           <div className="footer-cuvette">
@@ -59,13 +65,13 @@ const Home = () => {
           <div className="navbar-content">
             <ul>
               <li>
-                Status <svg></svg>
+                Status <img src={shareLink} alt="Share" />
               </li>
               <li>
-                Documentation <svg></svg>
+                Documentation <img src={shareLink} alt="Share" />
               </li>
               <li>
-                Roadmap <svg></svg>
+                Roadmap <img src={shareLink} alt="Share" />
               </li>
               <li>
                 Pricing
@@ -80,16 +86,16 @@ const Home = () => {
           <div className="navbar-content">
             <ul>
               <li>
-                Discord <svg></svg>
+                Discord <img src={shareLink} alt="Share" />
               </li>
               <li>
-                GitHub repository <svg></svg>
+                GitHub repository <img src={shareLink} alt="Share" />
               </li>
               <li>
-                Twitter <svg></svg>
+                Twitter <img src={shareLink} alt="Share" />
               </li>
               <li>
-                LinkedIn <svg></svg>
+                LinkedIn <img src={shareLink} alt="Share" />
               </li>
               <li>
                 OSS Friends 
