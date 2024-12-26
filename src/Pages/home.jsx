@@ -9,7 +9,6 @@ import shareLink from "../assets/ShareLink.png";
 import blueBgBlur from "../assets/blueBgBlur.png";
 import orangeBgBlur from "../assets/orangeBgBlur.png";
 
-
 const Home = () => {
   return (
     <div className="home-page">
@@ -20,47 +19,53 @@ const Home = () => {
         </div>
         <div className="right-navbar">
           <button className="signin-btn">
-            <Link to="/login" className="signin-link">Sign in</Link>
+            <Link to="/login" className="signin-link">
+              Sign in
+            </Link>
           </button>
           <button className="register-btn">
-            <Link to="/register" className="register-link">Create a FormBot</Link>
+            <Link to="/register" className="register-link">
+              Create a FormBot
+            </Link>
           </button>
         </div>
       </div>
       <div className="hero-section">
         <div className="hero-top-container">
-          <img src={hero1} alt="Hero Image 1" />
-          <img src={hero2} alt="Hero Image 2" />
-          <div className="hero-heading">
-            <h1>Build advanced chatbots visually</h1>
+          <img className="hero-1" src={hero1} alt="Hero Image 1" />
+          <div className="hero-content">
+            <div className="hero-heading">
+              <h1>Build advanced chatbots visually</h1>
+            </div>
+            <div className="hero-subheading">
+              <p>
+                Typebot gives you powerful blocks to create unique chat
+                experiences. Embed them anywhere on your web/mobile apps and
+                start collecting results like magic.
+              </p>
+            </div>
+            <div className="hero-btn">
+              <button className="register-btn">
+                <Link className="register-link" to="/register">Create a FormBot for free</Link>
+              </button>
+            </div>
           </div>
-          <div className="hero-subheading">
-            <p>
-              Typebot gives you powerful blocks to create unique chat
-              experiences. Embed them anywhere on your web/mobile apps and start
-              collecting results like magic.
-            </p>
-          </div>
-          <div className="hero-button">
-            <button>
-              <Link to="/register">Create a FormBot for free</Link>
-            </button>
-          </div>
+          <img className="hero-2" src={hero2} alt="Hero Image 2" />
         </div>
         <div className="hero-section-image">
-            <img src={orangeBgBlur} alt="Orange Blur" />
-            <img src={blueBgBlur} alt="Blue Blur" />
-          <img src={heroBanner} alt="Detailed Banner" />
+          <img className="orng-blur" src={orangeBgBlur} alt="Orange Blur" />
+          <img className="blue-blur" src={blueBgBlur} alt="Blue Blur" />
+          <img className="hero-banner" src={heroBanner} alt="Detailed Banner" />
         </div>
       </div>
-      <div className="footer">
+      <div className="landing-footer">
         <div className="left-navbar">
           <div className="footer-logo">
             <img src={logo} alt="Logo" />
             <h4>FormBot</h4>
           </div>
           <div className="footer-cuvette">
-            <p>Made with ❤️ by @cuvette</p>
+            <p>Made with ❤️ by <br /><span>@cuvette</span></p>
           </div>
         </div>
         <div className="product-navbar">
@@ -70,17 +75,15 @@ const Home = () => {
           <div className="navbar-content">
             <ul>
               <li>
-                Status <img src={shareLink} alt="Share" />
+                Status<img src={shareLink} alt="Share" />
               </li>
               <li>
-                Documentation <img src={shareLink} alt="Share" />
+                Documentation<img src={shareLink} alt="Share" />
               </li>
               <li>
-                Roadmap <img src={shareLink} alt="Share" />
+                Roadmap<img src={shareLink} alt="Share" />
               </li>
-              <li>
-                Pricing
-              </li>
+              <li>Pricing</li>
             </ul>
           </div>
         </div>
@@ -91,20 +94,18 @@ const Home = () => {
           <div className="navbar-content">
             <ul>
               <li>
-                Discord <img src={shareLink} alt="Share" />
+                Discord<img src={shareLink} alt="Share" />
               </li>
               <li>
-                GitHub repository <img src={shareLink} alt="Share" />
+                GitHub repository<img src={shareLink} alt="Share" />
               </li>
               <li>
-                Twitter <img src={shareLink} alt="Share" />
+                Twitter<img src={shareLink} alt="Share" />
               </li>
               <li>
-                LinkedIn <img src={shareLink} alt="Share" />
+                LinkedIn<img src={shareLink} alt="Share" />
               </li>
-              <li>
-                OSS Friends 
-              </li>
+              <li>OSS Friends</li>
             </ul>
           </div>
         </div>
@@ -114,18 +115,10 @@ const Home = () => {
           </div>
           <div className="navbar-content">
             <ul>
-              <li>
-                About
-              </li>
-              <li>
-                Contact
-              </li>
-              <li>
-                Terms of Service
-              </li>
-              <li>
-                Privacy Policy
-              </li>
+              <li>About</li>
+              <li>Contact</li>
+              <li>Terms of Service</li>
+              <li>Privacy Policy</li>
             </ul>
           </div>
         </div>
