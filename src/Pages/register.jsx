@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import "../app.css";
 import { register } from "../services";
 import { Link } from "react-router-dom";
+import backArrow from "../assets/arrow-back.png";
+import triangle from "../assets/Group-2.png";
+import ellipse1 from "../assets/Ellipse-1.png";
+import ellipse2 from "../assets/Ellipse-2.png";
+import googleIcon from "../assets/Google-Icon.png";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -19,8 +25,8 @@ const Register = () => {
         username: "",
         email: "",
         password: "",
-        confirmPassword: ""
-      })
+        confirmPassword: "",
+      });
     } else {
       console.log(res);
       alert("error");
@@ -28,79 +34,90 @@ const Register = () => {
   };
 
   return (
-    <>
-        <button>Back button</button>
-        <img src="" alt="" />
-        <img src="" alt="" />
-        <img src="" alt="" />
-      <form onSubmit={handleRegister}>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          value={registerData.username}
-          onChange={(e) =>
-            setRegisterData({
-              ...registerData,
-              [e.target.name]: e.target.value,
-            })
-          }
-          placeholder="Enter a username"
-          required
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          value={registerData.email}
-          onChange={(e) =>
-            setRegisterData({
-              ...registerData,
-              [e.target.name]: e.target.value,
-            })
-          }
-          placeholder="Enter your email"
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          value={registerData.password}
-          onChange={(e) =>
-            setRegisterData({
-              ...registerData,
-              [e.target.name]: e.target.value,
-            })
-          }
-          placeholder="**********"
-          required
-        />
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={registerData.confirmPassword}
-          onChange={(e) =>
-            setRegisterData({
-              ...registerData,
-              [e.target.name]: e.target.value,
-            })
-          }
-          placeholder="**********"
-          required
-        />
-        <button type="submit">Sign Up</button>
-      </form>
-      <h4>OR</h4>
-      <button>
-        <img src="" alt="" />
-        <span>Sign Up with Google</span>
-      </button>
-    <div>
-        <p>Already have an account ?<Link to="/login"> Login</Link></p>
+    <div className="bg-container">
+      <div className="back-btn">
+        <Link to="/" className="back-btn-link">
+          <img src={backArrow} alt="Back Arrow" />
+        </Link>
+      </div>
+
+      <div className="user-data">
+        <form onSubmit={handleRegister}>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            value={registerData.username}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            placeholder="Enter a username"
+            required
+          />
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={registerData.email}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            placeholder="Enter your email"
+            required
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={registerData.password}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            placeholder="**********"
+            required
+          />
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={registerData.confirmPassword}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            placeholder="**********"
+            required
+          />
+          <button className="blue-btn" type="submit">Sign Up</button>
+        </form>
+        <h4>OR</h4>
+        <button className="google-btn blue-btn">
+          <img src={googleIcon} alt="Google Icon" />
+          <span>Sign Up with Google</span>
+        </button>
+        <div className="change-request">
+          <p>
+            Already have an account ?<Link to="/login"> Login</Link>
+          </p>
+        </div>
+      </div>
+      <div className="bg-images">
+        <img className="triangle" src={triangle} alt="Triangle" />
+        <img className="ellipse1" src={ellipse1} alt="Ellipse 1" />
+        <img className="ellipse2" src={ellipse2} alt="Ellipse 2" />
+      </div>
     </div>
-    </>
   );
 };
 
