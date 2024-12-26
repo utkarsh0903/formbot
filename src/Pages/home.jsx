@@ -1,29 +1,29 @@
 import React from "react";
 import "../styles/home.css";
 import { Link } from "react-router-dom";
-import heroBanner from "../assets/heroBanner.svg";
-import hero1 from "../assets/hero-1.svg";
-import hero2 from "../assets/hero-2.svg";
-import logo from "../assets/Logo.svg";
-import shareLink from "../assets/ShareLink.svg";
-import blueBgBlur from "../assets/blueBgBlur.svg";
-import orangeBgBlur from "../assets/orangeBgBlur.svg";
+import heroBanner from "../assets/heroBanner.png";
+import hero1 from "../assets/hero-1.png";
+import hero2 from "../assets/hero-2.png";
+import logo from "../assets/Logo.png";
+import shareLink from "../assets/ShareLink.png";
+import blueBgBlur from "../assets/blueBgBlur.png";
+import orangeBgBlur from "../assets/orangeBgBlur.png";
 
 
 const Home = () => {
   return (
     <div className="home-page">
-      <div className="top-nav-bar">
+      <div className="top-navbar">
         <div className="logo">
           <img src={logo} alt="Logo" />
           <h4>FormBot</h4>
         </div>
-        <div className="right-nav-bar">
-          <button>
-            <Link to="/login">Sign in</Link>
+        <div className="right-navbar">
+          <button className="signin-btn">
+            <Link to="/login" className="signin-link">Sign in</Link>
           </button>
-          <button>
-            <Link to="/register">Create a FormBot</Link>
+          <button className="register-btn">
+            <Link to="/register" className="register-link">Create a FormBot</Link>
           </button>
         </div>
       </div>
