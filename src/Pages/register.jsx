@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { register } from "../services";
 import { Link } from "react-router-dom";
+import backArrow from "../assets/arrow-back.png";
+import triangle from "../assets/Group-2.png";
+import ellipse1 from "../assets/Ellipse-1.png";
+import ellipse2 from "../assets/Ellipse-2.png";
+import googleIcon from "../assets/Google-Icon.png";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -19,8 +24,8 @@ const Register = () => {
         username: "",
         email: "",
         password: "",
-        confirmPassword: ""
-      })
+        confirmPassword: "",
+      });
     } else {
       console.log(res);
       alert("error");
@@ -29,10 +34,12 @@ const Register = () => {
 
   return (
     <>
-        <button>Back button</button>
-        <img src="" alt="" />
-        <img src="" alt="" />
-        <img src="" alt="" />
+      <Link to="/">
+        <img src={backArrow} alt="Back Arrow" />
+      </Link>
+      <img src={triangle} alt="Triangle" />
+      <img src={ellipse1} alt="Ellipse 1" />
+      <img src={ellipse2} alt="Ellipse 2" />
       <form onSubmit={handleRegister}>
         <label htmlFor="username">Username</label>
         <input
@@ -94,12 +101,14 @@ const Register = () => {
       </form>
       <h4>OR</h4>
       <button>
-        <img src="" alt="" />
+        <img src={googleIcon} alt="Google Icon" />
         <span>Sign Up with Google</span>
       </button>
-    <div>
-        <p>Already have an account ?<Link to="/login"> Login</Link></p>
-    </div>
+      <div>
+        <p>
+          Already have an account ?<Link to="/login"> Login</Link>
+        </p>
+      </div>
     </>
   );
 };

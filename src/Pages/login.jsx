@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { login } from "../services";
 import { Link } from "react-router-dom";
+import backArrow from "../assets/arrow-back.png";
+import triangle from "../assets/Group-2.png";
+import ellipse1 from "../assets/Ellipse-1.png";
+import ellipse2 from "../assets/Ellipse-2.png";
+import googleIcon from "../assets/Google-Icon.png";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -25,10 +30,10 @@ const Login = () => {
 
   return (
     <>
-      <button>Back button</button>
-        <img src="" alt="" />
-        <img src="" alt="" />
-        <img src="" alt="" />
+      <Link to="/"><img src={backArrow} alt="Back Arrow" /></Link>
+        <img src={triangle} alt="Triangle" />
+        <img src={ellipse1} alt="Ellipse 1" />
+        <img src={ellipse2} alt="Ellipse 2" />
       <form onSubmit={handleLogin}>
       <label htmlFor="email">Email</label>
         <input
@@ -62,7 +67,7 @@ const Login = () => {
       </form>
       <h4>OR</h4>
       <button>
-        <img src="" alt="" />
+        <img src={googleIcon} alt="Google Icon" />
         <span>Sign In with Google</span>
       </button>
     <div>
