@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@700&display=swap");
+
+.home-page {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(23, 25, 35, 1);
+}
+
+.top-navbar {
+  padding-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  .right-navbar {
+    padding-right: 130px;
+    .signin-btn {
+      background-color: rgba(23, 25, 35, 1);
+      border: 1px solid rgba(126, 166, 255, 1);
+      border-radius: 3px;
+      padding: 8.05px 17px 8.75px 17px;
+      margin-right: 1em;
+      .signin-link {
+        color: rgba(126, 166, 255, 1);
+        font-family: "Open Sans", serif;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 19.2px;
+        text-align: left;
+      }
+    }
+  }
+}
+
+.logo {
+  padding-left: 130px;
+  display: flex;
+  align-items: center;
+  img {
+    width: 36px;
+    height: 33px;
+  }
+  h4 {
+    width: 73px;
+    color: rgba(255, 255, 255, 1);
+    padding-left: 5px;
+    font-family: "Outfit", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21.6px;
+    text-align: left;
+  }
+}
+
+.register-btn {
+  background: rgba(26, 95, 255, 1);
+  border: none;
+  border-radius: 3px;
+  padding: 8.05px 17px 8.75px 17px;
+  box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.2) inset;
+  .register-link {
+    color: rgba(255, 255, 255, 1);
+    font-family: "Open-Sans";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.2px;
+    text-align: left;
+  }
+}
+
+.hero-section {
+  .hero-top-container {
+    display: flex;
+    .hero-1 {
+      margin-left: -2.5em;
+      margin-top: 2em;
+    }
+    .hero-2 {
+      height: 360px;
+    }
+    .hero-content {
+      margin-left: -2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .hero-heading {
+        margin-top: 140px;
+        h1 {
+          font-family: "Outfit", sans-serif;
+          font-size: 52px;
+          font-weight: 1000;
+          font-weight: 700;
+          line-height: 66.4px;
+          text-align: center;
+          background: linear-gradient(90deg, #4b83ff 0%, #b794f4 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+      }
+      .hero-subheading {
+        margin-top: 20px;
+        p {
+          font-family: Open Sans;
+          font-size: 15px;
+          font-weight: 400;
+          line-height: 30px;
+          text-align: center;
+          color: rgba(255, 255, 255, 0.92);
+        }
+      }
+      .hero-btn {
+        margin-top: 1.5em;
+      }
+    }
+  }
+  .hero-section-image {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+    .orng-blur {
+      margin-left: 2em;
+      width: 580px;
+      z-index: 1;
+    }
+    .blue-blur {
+      margin-right: 1.2em;
+      width: 580px;
+      z-index: 1;
+    }
+    .hero-banner {
+      z-index: 10;
+      position: absolute;
+      top: 50px;
+      left: 100px;
+      width: 85%;
+      height: 550px;
+    }
+  }
+}
+
+.landing-footer {
+  margin-top: 10em;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5em;
+  width: 99%;
+  .left-navbar {
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      img {
+        width: 26px;
+        height: 23px;
+      }
+      h4 {
+        width: 73px;
+        color: rgba(255, 255, 255, 1);
+        padding-left: 5px;
+        font-family: "Outfit", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 21.6px;
+        text-align: left;
+      }
+    }
+    .footer-cuvette {
+      margin-top: 2em;
+      p {
+        font-family: "Open Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 14px;
+        text-align: left;
+        color: rgba(255, 255, 255, 0.92);
+        span {
+          font-family: "Open Sans", sans-serif;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 14px;
+          text-align: left;
+          text-decoration-line: underline;
+          text-decoration-style: solid;
+        }
+      }
+    }
+  }
+  .product-navbar {
+    margin-left: 5em;
+  }
+  .community-navbar {
+    margin-left: 5em;
+  }
+  .company-navbar {
+    margin-left: 5em;
+  }
+}
+
+.navbar-title {
+  h3 {
+    font-family: "Outfit", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21.6px;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.92);
+  }
+}
+
+.navbar-content {
+  margin-top: 1.5em;
+  font-family: Open Sans;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration-skip-ink: none;
+  > ul > li {
+    list-style: none;
+    cursor: pointer;
+    > img {
+      padding-left: 6px;
+      width: 10px;
+    }
+  }
+}
