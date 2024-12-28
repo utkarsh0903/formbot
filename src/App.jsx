@@ -3,6 +3,7 @@ import Register from "./Pages/register.jsx";
 import Login from "./Pages/login.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/home.jsx";
+import Workspace from "./Pages/workspace.jsx";
 
 function App() {
   
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/workspace" element={<Workspace />} />
       {/* <Route path="*" element={<NoPage />} /> */}
     </Routes>
     </BrowserRouter>

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../app.css";
 import "../styles/login.css";
 import { login } from "../services";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import backArrow from "../assets/arrow-back.png";
 import triangle from "../assets/Group-2.png";
 import ellipse1 from "../assets/Ellipse-1.png";
@@ -10,23 +10,35 @@ import ellipse2 from "../assets/Ellipse-2.png";
 import googleIcon from "../assets/Google-Icon.png";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token){
+      navigate("/workspace");
+    }
+  }, [])
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     const res = await login(loginData);
     if (res.status === 200) {
+      const data = await res.json(res.token)
+      localStorage.setItem('token', data.token)
       alert("Login successfully");
+      navigate("/workspace");
       setLoginData({
         email: "",
         password: "",
       });
     } else {
-      console.log(res);
-      alert("error");
+      const data = await res.json(res);
+      console.log(data);
+      alert(data.message);
     }
   };
 

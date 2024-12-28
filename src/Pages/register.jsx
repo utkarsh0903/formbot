@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../app.css";
+import "../styles/register.css";
 import { register } from "../services";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import backArrow from "../assets/arrow-back.png";
 import triangle from "../assets/Group-2.png";
 import ellipse1 from "../assets/Ellipse-1.png";
@@ -9,6 +10,15 @@ import ellipse2 from "../assets/Ellipse-2.png";
 import googleIcon from "../assets/Google-Icon.png";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     navigate("/workspace");
+  //   }
+  // }, []);
+
   const [registerData, setRegisterData] = useState({
     username: "",
     email: "",
@@ -21,6 +31,7 @@ const Register = () => {
     const res = await register(registerData);
     if (res.status === 200) {
       alert("registered successfully");
+      navigate("/login");
       setRegisterData({
         username: "",
         email: "",
@@ -28,8 +39,8 @@ const Register = () => {
         confirmPassword: "",
       });
     } else {
-      console.log(res);
-      alert("error");
+      const data = await res.json(res);
+      alert(data.message);
     }
   };
 
@@ -41,7 +52,7 @@ const Register = () => {
         </Link>
       </div>
 
-      <div className="user-data">
+      <div className="user-data" id="user-container">
         <form onSubmit={handleRegister}>
           <label htmlFor="username">Username</label>
           <input
@@ -99,7 +110,9 @@ const Register = () => {
             placeholder="**********"
             required
           />
-          <button className="blue-btn" type="submit">Sign Up</button>
+          <button className="blue-btn" type="submit">
+            Sign Up
+          </button>
         </form>
         <h4>OR</h4>
         <button className="google-btn blue-btn">
