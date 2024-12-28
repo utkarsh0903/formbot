@@ -36,8 +36,9 @@ const Login = () => {
         password: "",
       });
     } else {
-      console.log(res);
-      alert("error");
+      const data = await res.json(res);
+      console.log(data);
+      alert(data.message);
     }
   };
 
