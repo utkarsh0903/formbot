@@ -4,6 +4,7 @@ import Login from "./Pages/login.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/home.jsx";
 import Workspace from "./Pages/workspace.jsx";
+import Settings from "./Pages/settings.jsx";
 
 function App() {
   
@@ -14,7 +15,9 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/workspace" element={<Workspace />} />
+      <Route path="/workspace" element={<Workspace />} >
+        <Route path="/workspace/settings" element={<Settings />} />
+      </Route>
       {/* <Route path="*" element={<NoPage />} /> */}
     </Routes>
     </BrowserRouter>
