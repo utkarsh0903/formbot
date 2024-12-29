@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CreateFolderModal from "../components/CreateFolderModal";
+import CreateFormModal from "../components/CreateFormModal";
 
 const Workspace = () => {
     const navigate = useNavigate();
   const [menuState, setMenuState] = useState(false);
+  const [isFolderModalOpen, setIsFolderModalOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [folderName, setFolderName] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -13,11 +18,19 @@ const Workspace = () => {
     }
   }, [])
   
-
   const handleLogout = () =>{
     localStorage.clear('token');
     navigate('/');
   }
+
+  const createFolder = () => {
+    setIsFolderModalOpen(true);
+  }
+
+  const createForm = () => {
+    setIsFormModalOpen(true);
+  }
+
   return (
     <div>
       <div className="top-navbar">
@@ -29,8 +42,8 @@ const Workspace = () => {
           {menuState && (
             <div className="workspace-menu">
               <ul>
-                <li>Workspace</li>
-                <li>Settings</li>
+                <li><button>Workspace</button></li>
+                <li><Link to="/workspace/settings">Settings</Link></li>
                 <li><button onClick={handleLogout}>Logout</button></li>
               </ul>
             </div>
@@ -47,19 +60,33 @@ const Workspace = () => {
       </div>
       <hr />
       <div className="create-folder-btn">
-        <button>
+        <button onClick={createFolder}>
           <img src="" alt="" />
           <span>Create a folder</span>
+          {isFolderModalOpen && <CreateFolderModal />}
         </button>
       </div>
       <div className="create-form-btn">
-        <button>
+        <button onClick={createForm}>
           <img src="" alt="" />
           <span>Create a typebot</span>
+          {isFormModalOpen && <CreateFormModal />}
         </button>
       </div>
     </div>
   );
 };
+
+const Folder = () => {
+    return (
+        <>
+        </>
+    )
+}
+
+const Form = ()=>{
+    return <>
+    </>
+}
 
 export default Workspace;
