@@ -15,9 +15,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/workspace" element={<Workspace />} >
-        <Route path="/workspace/settings" element={<Settings />} />
-      </Route>
+      <Route path="/workspace" element={<Workspace />} />
+      <Route path="/settings" element={<Settings />} />
       {/* <Route path="*" element={<NoPage />} /> */}
     </Routes>
     </BrowserRouter>

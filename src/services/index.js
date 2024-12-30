@@ -18,3 +18,14 @@ export const login = (data) => {
         body: JSON.stringify(data),
     })
 }
+
+export const workspace = () => {
+    return fetch(`${URL}/workspace/create-workspace`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(),
+    })
+}

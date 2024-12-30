@@ -3,51 +3,83 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CreateFolderModal from "../components/CreateFolderModal";
 import CreateFormModal from "../components/CreateFormModal";
+import { workspace } from "../services";
 
 const Workspace = () => {
-    const navigate = useNavigate();
-  const [menuState, setMenuState] = useState(false);
+  const navigate = useNavigate();
+  const [workspaceMenu, setWorkspaceMenu] = useState([]);
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [folderName, setFolderName] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if(!token){
-        navigate('/login');
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
     }
-  }, [])
-  
-  const handleLogout = () =>{
-    localStorage.clear('token');
-    navigate('/');
-  }
+    console.log(1);
+    createWorkspace();
+  }, []);
+
+  const createWorkspace = async () => {
+    const res = await workspace();
+    if (res.status === 200) {
+      const data = await res.json(res);
+      const workspaces = Array.isArray(data.workspace)
+        ? data.workspace
+        : [data.workspace];
+      setWorkspaceMenu(workspaces);
+      console.log(data.workspace);
+    } else {
+      const data = await res.json(res);
+      console.log(data);
+      alert(data.message);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.clear("token");
+    navigate("/");
+  };
+
+  const handleWorkspaceMenu = (e, value) => {
+    e.preventDefault();
+    if (value == "logout") {
+      handleLogout();
+    } else if (value == "settings") {
+      navigate("/settings");
+    }
+  };
 
   const createFolder = () => {
     setIsFolderModalOpen(true);
-  }
+  };
 
   const createForm = () => {
     setIsFormModalOpen(true);
-  }
+  };
 
   return (
     <div>
       <div className="top-navbar">
         <div className="workspace-btn">
-          <span>
-            Utkarsh Workspace{" "}
-            <button onClick={() => setMenuState(!menuState)} >Click Me</button>
-          </span>
-          {menuState && (
-            <div className="workspace-menu">
-              <ul>
-                <li><button>Workspace</button></li>
-                <li><Link to="/workspace/settings">Settings</Link></li>
-                <li><button onClick={handleLogout}>Logout</button></li>
-              </ul>
-            </div>
-          )}
+          <select
+            onChange={(e) => {
+              handleWorkspaceMenu(e, e.target.value);
+            }}
+            value={
+              workspaceMenu.length > 0 ? workspaceMenu[0]?.owner?.username : ""
+            }
+            name="workspace"
+          >
+            {workspaceMenu.map((workspace, index) => (
+              <option key={index} value={workspace.owner.username}>
+                {workspace.owner.username} Workspace
+              </option>
+            ))}
+            <option value="settings">Settings</option>
+            <option value="logout">Logout</option>
+          </select>
         </div>
         <div className="theme-changer">
           <h4>Light</h4>
@@ -78,15 +110,11 @@ const Workspace = () => {
 };
 
 const Folder = () => {
-    return (
-        <>
-        </>
-    )
-}
+  return <></>;
+};
 
-const Form = ()=>{
-    return <>
-    </>
-}
+const Form = () => {
+  return <></>;
+};
 
 export default Workspace;
