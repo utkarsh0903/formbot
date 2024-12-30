@@ -3,11 +3,13 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CreateFolderModal from "../components/CreateFolderModal";
 import CreateFormModal from "../components/CreateFormModal";
-import { workspace } from "../services";
+import { getWorkspace, workspace } from "../services";
 
 const Workspace = () => {
   const navigate = useNavigate();
   const [workspaceMenu, setWorkspaceMenu] = useState([]);
+  const [activeWorkspace, setActiveworkspace] = useState({});
+  const [selectedWorkspace, setSelectedWorkspace] = useState("");
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [folderName, setFolderName] = useState([]);
@@ -17,7 +19,6 @@ const Workspace = () => {
     if (!token) {
       navigate("/login");
     }
-    console.log(1);
     createWorkspace();
   }, []);
 
@@ -29,7 +30,6 @@ const Workspace = () => {
         ? data.workspace
         : [data.workspace];
       setWorkspaceMenu(workspaces);
-      console.log(data.workspace);
     } else {
       const data = await res.json(res);
       console.log(data);
@@ -49,7 +49,25 @@ const Workspace = () => {
     } else if (value == "settings") {
       navigate("/settings");
     }
+    else {
+        setSelectedWorkspace(value);
+        changeWorkspace(value);
+    }
   };
+
+  const changeWorkspace = async (username) => {
+    const selectedWorkspace = await workspaceMenu.find((workspace) => workspace.owner.username === username);
+    const workspaceId = selectedWorkspace._id;
+    const res = await getWorkspace(workspaceId);
+    if (res.status === 200) {
+        const data = await res.json(res);
+        setActiveworkspace(data.workspace);
+      } else {
+        const data = await res.json(res);
+        console.log(data);
+        alert(data.message);
+      }
+  }
 
   const createFolder = () => {
     setIsFolderModalOpen(true);
@@ -67,12 +85,11 @@ const Workspace = () => {
             onChange={(e) => {
               handleWorkspaceMenu(e, e.target.value);
             }}
-            value={
-              workspaceMenu.length > 0 ? workspaceMenu[0]?.owner?.username : ""
-            }
+            value={selectedWorkspace}
             name="workspace"
           >
             {workspaceMenu.map((workspace, index) => (
+                
               <option key={index} value={workspace.owner.username}>
                 {workspace.owner.username} Workspace
               </option>

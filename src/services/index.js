@@ -29,3 +29,14 @@ export const workspace = () => {
         body: JSON.stringify(),
     })
 }
+
+export const getWorkspace = (workspaceId) => {
+    return fetch(`${URL}/workspace/${workspaceId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(),
+    })
+}
