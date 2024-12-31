@@ -40,3 +40,25 @@ export const getWorkspace = (workspaceId) => {
         body: JSON.stringify(),
     })
 }
+
+export const createFolder = (data) => {
+    return fetch(`${URL}/folder/create-folder`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+export const createForm = (data) => {
+    return fetch(`${URL}/form/create-form`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}
