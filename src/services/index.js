@@ -52,6 +52,17 @@ export const createFolder = (data) => {
     })
 }
 
+export const getFolder = (folderId) => {
+    return fetch(`${URL}/folder/${folderId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(),
+    })
+}
+
 export const createForm = (data) => {
     return fetch(`${URL}/form/create-form`, {
         method: 'POST',

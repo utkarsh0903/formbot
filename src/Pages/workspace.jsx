@@ -3,7 +3,13 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CreateFolderModal from "../components/CreateFolderModal";
 import CreateFormModal from "../components/CreateFormModal";
-import { createFolder, getWorkspace, workspace, createForm } from "../services";
+import {
+  createFolder,
+  getWorkspace,
+  workspace,
+  createForm,
+  getFolder,
+} from "../services";
 
 const Workspace = () => {
   const navigate = useNavigate();
@@ -114,6 +120,15 @@ const Workspace = () => {
 
   const openFolder = async (folderId) => {
     setIsFolderOpen(true);
+    const res = await getFolder(folderId);
+    if (res.status === 200) {
+      const data = await res.json(res);
+      setActiveFolder(data);
+    } else {
+      const data = await res.json(res);
+      console.log(data);
+      alert(data.message);
+    }
   };
 
   return (
@@ -182,14 +197,31 @@ const Workspace = () => {
             />
           )}
         </button>
-        {activeWorkspace?.form?.length > 0 &&
+        {isFolderOpen ? (
+          activeFolder?.form?.length > 0 ? (
+            activeFolder.form.map((form) => (
+              <button key={form.formId} onClick={() => navigate("/form")}>
+                {form.formName}
+              </button>
+            ))
+          ) : (
+            <p></p>
+          )
+        ) : (
+          activeWorkspace?.form?.length > 0 &&
+          activeWorkspace.form.map((form) => (
+            <button key={form.formId} onClick={() => navigate("/form")}>
+              {form.formName}
+            </button>
+          ))
+        )}
+        {/* {activeWorkspace?.form?.length > 0 &&
           activeWorkspace.form.map((form) => (
             <button key={form.formId} onClick={() => openForm(form.formId)}>
               {form.formName}
             </button>
-          ))}
+          ))} */}
       </div>
-      {isFolderOpen && <h2>FolderOpen</h2>}
     </div>
   );
 };
