@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { checkUserMode } from "../services";
+import close from "../assets/close.png";
 
 const ShareBtn = ({ activeWorkspaceId }) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -36,7 +37,9 @@ const ShareBtn = ({ activeWorkspaceId }) => {
       <button onClick={() => handleShareBtn()}>Share</button>
       {isShareModalOpen && (
         <div>
-          <button onClick={() => setIsShareModalOpen(false)}>Close</button>
+          <button onClick={() => setIsShareModalOpen(false)}>
+            <img src={close} alt="Close Btn" />
+          </button>
           <h2>Invite by Email</h2>
           <select
             name="sharedMode"
