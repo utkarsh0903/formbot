@@ -13,6 +13,7 @@ import {
   getForm,
   deleteForm,
   createFormInFolder,
+  deleteFormInFolder,
 } from "../services";
 import DeleteFolderModal from "../components/DeleteFolderModal";
 import DeleteFormModal from "../components/DeleteFormModal";
@@ -124,14 +125,16 @@ const Workspace = () => {
       const data = await res.json(res);
       isFolderOpen ? openFolder(data.form.folder) : createWorkspace();
       setIsFormModalOpen(false);
-      (isFolderOpen ? setInFolderFormData({
-        formName: "",
-        activeWorkspaceId: "",
-        activeFolderId: ""
-      }) : setFormData({
-        formName: "",
-        activeWorkspaceId: "",
-      }) )
+      isFolderOpen
+        ? setInFolderFormData({
+            formName: "",
+            activeWorkspaceId: "",
+            activeFolderId: "",
+          })
+        : setFormData({
+            formName: "",
+            activeWorkspaceId: "",
+          });
     } else {
       const data = await res.json(res);
       alert(data.message);
@@ -185,9 +188,11 @@ const Workspace = () => {
 
   const handleDeleteForm = async (e, formData) => {
     e.preventDefault();
-    const res = await deleteForm(formData);
+    const res = await (isFolderOpen
+      ? deleteFormInFolder(formData)
+      : deleteForm(formData));
     if (res.status === 200) {
-      createWorkspace();
+        isFolderOpen ? openFolder(data.form.folder) : createWorkspace();
       setIsDeleteFormModalOpen(false);
     } else {
       const data = await res.json(res);
@@ -272,17 +277,25 @@ const Workspace = () => {
             setFormData={isFolderOpen ? setInFolderFormData : setFormData}
             handleCreateForm={handleCreateForm}
             activeFolderId={activeFolder ? activeFolder._id : null}
-            setIsFormModalOpen = {setIsFormModalOpen}
+            setIsFormModalOpen={setIsFormModalOpen}
           />
         )}
         {isDeleteFormModalOpen && (
           <DeleteFormModal
             activeWorkspaceId={activeWorkspace._id}
-            formData={formData}
+            activeFolderId={activeFolder ? activeFolder._id : null}
+            formData={isFolderOpen ? inFolderFormData : formData}
             formName={activeForm.formName}
             setIsDeleteFormModalOpen={setIsDeleteFormModalOpen}
             handleDeleteForm={handleDeleteForm}
           />
+          //   <DeleteFormModal
+          //     activeWorkspaceId={activeWorkspace._id}
+          //     formData={formData}
+          //     formName={activeForm.formName}
+          //     setIsDeleteFormModalOpen={setIsDeleteFormModalOpen}
+          //     handleDeleteForm={handleDeleteForm}
+          //   />
         )}
         {isFolderOpen ? (
           activeFolder?.form?.length > 0 ? (

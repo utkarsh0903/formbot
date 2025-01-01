@@ -117,3 +117,14 @@ export const createFormInFolder = (data) => {
         body: JSON.stringify(data),
     })
 }
+
+export const deleteFormInFolder = (data) => {
+    return fetch(`${URL}/form/folder/delete-form`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}

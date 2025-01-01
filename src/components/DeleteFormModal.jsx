@@ -2,6 +2,7 @@ import React from "react";
 
 const DeleteFormModal = ({
   activeWorkspaceId,
+  activeFolderId,
   formData,
   formName,
   setIsDeleteFormModalOpen,
@@ -12,7 +13,9 @@ const DeleteFormModal = ({
         ...formData,
         formName: formName,
         activeWorkspaceId:activeWorkspaceId,
+        ...activeFolderId && { activeFolderId }
       }
+      console.log(data);
     handleDeleteForm(e, data);
   };
 
