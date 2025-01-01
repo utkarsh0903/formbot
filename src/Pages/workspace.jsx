@@ -17,6 +17,7 @@ import {
 } from "../services";
 import DeleteFolderModal from "../components/DeleteFolderModal";
 import DeleteFormModal from "../components/DeleteFormModal";
+import ShareBtn from "../components/ShareBtn";
 
 const Workspace = () => {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ const Workspace = () => {
     const res = await getWorkspace(workspaceId);
     if (res.status === 200) {
       const data = await res.json(res);
-      setActiveworkspace(data.workspace);
+      setActiveWorkspace(data.workspace);
     } else {
       const data = await res.json(res);
       alert(data.message);
@@ -142,7 +143,7 @@ const Workspace = () => {
   };
 
   const openFolder = async (folderId) => {
-    setIsFolderOpen(true);
+    setIsFolderOpen(!isFolderOpen);
     const res = await getFolder(folderId);
     if (res.status === 200) {
       const data = await res.json(res);
@@ -178,6 +179,7 @@ const Workspace = () => {
     e.preventDefault();
     const res = await deleteFolder(folderData);
     if (res.status === 200) {
+      setIsFolderOpen(false);
       createWorkspace();
       setIsDeleteFolderModalOpen(false);
     } else {
@@ -192,7 +194,9 @@ const Workspace = () => {
       ? deleteFormInFolder(formData)
       : deleteForm(formData));
     if (res.status === 200) {
-        isFolderOpen ? openFolder(data.form.folder) : createWorkspace();
+      const data = await res.json();
+      alert(data.message);
+      isFolderOpen ? openFolder(activeFolder._id) : createWorkspace();
       setIsDeleteFormModalOpen(false);
     } else {
       const data = await res.json(res);
@@ -226,7 +230,7 @@ const Workspace = () => {
           <h4>Dark</h4>
         </div>
         <div className="share-btn">
-          <button>Share</button>
+          <ShareBtn activeWorkspaceId={activeWorkspace._id} />
         </div>
       </div>
       <hr />

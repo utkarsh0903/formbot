@@ -41,6 +41,17 @@ export const getWorkspace = (workspaceId) => {
     })
 }
 
+export const checkUserMode = (data) => {
+    return fetch(`${URL}/workspace/sharedWith/${data.workspaceId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':`${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}
+
 export const createFolder = (data) => {
     return fetch(`${URL}/folder/create-folder`, {
         method: 'POST',
