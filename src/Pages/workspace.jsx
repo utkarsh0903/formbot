@@ -10,19 +10,24 @@ import {
   createForm,
   getFolder,
   deleteFolder,
+  getForm,
+  deleteForm,
 } from "../services";
 import DeleteFolderModal from "../components/DeleteFolderModal";
+import DeleteFormModal from "../components/DeleteFormModal";
 
 const Workspace = () => {
   const navigate = useNavigate();
   const [workspaceMenu, setWorkspaceMenu] = useState([]);
   const [activeWorkspace, setActiveWorkspace] = useState({});
   const [activeFolder, setActiveFolder] = useState({});
+  const [activeForm, setActiveForm] = useState({});
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [selectedWorkspace, setSelectedWorkspace] = useState("");
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false);
   const [isDeleteFolderModalOpen, setIsDeleteFolderModalOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isDeleteFormModalOpen, setIsDeleteFormModalOpen] = useState(false);
   const [folderData, setFolderData] = useState({
     folderName: "",
     activeWorkspaceId: "",
@@ -130,9 +135,30 @@ const Workspace = () => {
     }
   };
 
+  const openForm = async (formId) => {
+    const res = await getForm(formId);
+    if (res.status === 200) {
+      const data = await res.json(res);
+      console.log(data);
+      setActiveForm(data);
+    } else {
+      const data = await res.json(res);
+      alert(data.message);
+    }
+  };
+
+  const handleDeleteFolderBtn = (folderId) => {
+    openFolder(folderId);
+    setIsDeleteFolderModalOpen(true);
+  };
+
+  const handleDeleteFormBtn = (formId) => {
+    openForm(formId);
+    setIsDeleteFormModalOpen(true);
+  };
+
   const handleDeleteFolder = async (e, folderData) => {
     e.preventDefault();
-    console.log(folderData);
     const res = await deleteFolder(folderData);
     if (res.status === 200) {
       createWorkspace();
@@ -141,7 +167,19 @@ const Workspace = () => {
       const data = await res.json(res);
       alert(data.message);
     }
-  }
+  };
+
+  const handleDeleteForm = async (e, formData) => {
+    e.preventDefault();
+    const res = await deleteForm(formData);
+    if (res.status === 200) {
+      createWorkspace();
+      setIsDeleteFormModalOpen(false);
+    } else {
+      const data = await res.json(res);
+      alert(data.message);
+    }
+  };
 
   return (
     <div>
@@ -179,31 +217,32 @@ const Workspace = () => {
           <span>Create a folder</span>
         </button>
         {isFolderModalOpen && (
-            <CreateFolderModal
-              activeWorkspaceId={activeWorkspace._id}
-              folderData={folderData}
-              setFolderData={setFolderData}
-              handleCreateFolder={handleCreateFolder}
-            />
-          )}
-          {isDeleteFolderModalOpen && (
-            <DeleteFolderModal
-              activeWorkspaceId={activeWorkspace._id}
-              folderData={folderData}
-              folderName={activeFolder.folderName}
-              setIsDeleteFolderModalOpen={setIsDeleteFolderModalOpen}
-              handleDeleteFolder={handleDeleteFolder}
-            />
-          )}
+          <CreateFolderModal
+            activeWorkspaceId={activeWorkspace._id}
+            folderData={folderData}
+            setFolderData={setFolderData}
+            handleCreateFolder={handleCreateFolder}
+          />
+        )}
+        {isDeleteFolderModalOpen && (
+          <DeleteFolderModal
+            activeWorkspaceId={activeWorkspace._id}
+            folderData={folderData}
+            folderName={activeFolder.folderName}
+            setIsDeleteFolderModalOpen={setIsDeleteFolderModalOpen}
+            handleDeleteFolder={handleDeleteFolder}
+          />
+        )}
         {activeWorkspace?.folder?.length > 0 &&
           activeWorkspace.folder.map((folder) => (
-            <button
-              key={folder.folderId}
-              onClick={() => openFolder(folder.folderId)}
-            >
-              {folder.folderName}
-              <p onClick={() => setIsDeleteFolderModalOpen(true)}>Delete</p>
-            </button>
+            <div key={folder.folderId}>
+              <button onClick={() => openFolder(folder.folderId)}>
+                {folder.folderName}
+              </button>
+              <button onClick={() => handleDeleteFolderBtn(folder.folderId)}>
+                Delete
+              </button>
+            </div>
           ))}
       </div>
       <div className="create-form-btn">
@@ -212,19 +251,33 @@ const Workspace = () => {
           <span>Create a typebot</span>
         </button>
         {isFormModalOpen && (
-            <CreateFormModal
-              activeWorkspaceId={activeWorkspace._id}
-              formData={formData}
-              setFormData={setFormData}
-              handleCreateForm={handleCreateForm}
-            />
-          )}
+          <CreateFormModal
+            activeWorkspaceId={activeWorkspace._id}
+            formData={formData}
+            setFormData={setFormData}
+            handleCreateForm={handleCreateForm}
+          />
+        )}
+        {isDeleteFormModalOpen && (
+          <DeleteFormModal
+            activeWorkspaceId={activeWorkspace._id}
+            formData={formData}
+            formName={activeForm.formName}
+            setIsDeleteFormModalOpen={setIsDeleteFormModalOpen}
+            handleDeleteForm={handleDeleteForm}
+          />
+        )}
         {isFolderOpen ? (
           activeFolder?.form?.length > 0 ? (
             activeFolder.form.map((form) => (
-              <button key={form.formId} onClick={() => navigate("/form")}>
-                {form.formName}
-              </button>
+              <div key={form.formId}>
+                <button onClick={() => navigate(`/form/${form.formId}`)}>
+                  {form.formName}
+                </button>
+                <button onClick={() => handleDeleteFormBtn(form.formId)}>
+                  Delete
+                </button>
+              </div>
             ))
           ) : (
             <p></p>
@@ -232,17 +285,16 @@ const Workspace = () => {
         ) : (
           activeWorkspace?.form?.length > 0 &&
           activeWorkspace.form.map((form) => (
-            <button key={form.formId} onClick={() => navigate("/form")}>
-              {form.formName}
-            </button>
+            <div key={form.formId}>
+              <button onClick={() => navigate(`/form/${form.formId}`)}>
+                {form.formName}
+              </button>
+              <button onClick={() => handleDeleteFormBtn(form.formId)}>
+                Delete
+              </button>
+            </div>
           ))
         )}
-        {/* {activeWorkspace?.form?.length > 0 &&
-          activeWorkspace.form.map((form) => (
-            <button key={form.formId} onClick={() => openForm(form.formId)}>
-              {form.formName}
-            </button>
-          ))} */}
       </div>
     </div>
   );

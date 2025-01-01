@@ -13,7 +13,6 @@ const DeleteFolderModal = ({
         folderName: folderName,
         activeWorkspaceId:activeWorkspaceId,
       }
-    console.log(folderData);
     handleDeleteFolder(e, data);
   };
 

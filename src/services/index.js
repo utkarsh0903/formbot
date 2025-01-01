@@ -84,3 +84,25 @@ export const createForm = (data) => {
         body: JSON.stringify(data),
     })
 }
+
+export const getForm = (formId) => {
+    return fetch(`${URL}/form/${formId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(),
+    })
+}
+
+export const deleteForm = (data) => {
+    return fetch(`${URL}/form/delete-form`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}
