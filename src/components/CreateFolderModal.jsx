@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateFolderModal = ({ activeWorkspaceId, folderData, setFolderData, handleCreateFolder }) => {
+const CreateFolderModal = ({ activeWorkspaceId, folderData, setFolderData, handleCreateFolder, setIsFolderModalOpen }) => {
   return (
     <div>
       <h2>Create New Folder</h2>
@@ -17,7 +17,7 @@ const CreateFolderModal = ({ activeWorkspaceId, folderData, setFolderData, handl
       />
       <button onClick={(e) => {handleCreateFolder(e)}}>Done</button>
       <span>|</span>
-      <button>Cancel</button>
+      <button onClick={() => setIsFolderModalOpen(false)}>Cancel</button>
     </div>
   );
 };
