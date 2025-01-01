@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import "../App";
 
 const Settings = () => {
   return (
-    <div>settings</div>
+    <div>
+      <h2>Settings </h2>
+    </div>
   )
 }
 

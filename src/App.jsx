@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/home.jsx";
 import Workspace from "./Pages/workspace.jsx";
 import Settings from "./Pages/settings.jsx";
+import Form from "./Pages/form.jsx";
 
 function App() {
   
@@ -15,9 +16,9 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/workspace" element={<Workspace />} >
-        <Route path="/workspace/settings" element={<Settings />} />
-      </Route>
+      <Route path="/workspace" element={<Workspace />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/form/:formId" element={<Form />} />
       {/* <Route path="*" element={<NoPage />} /> */}
     </Routes>
     </BrowserRouter>
