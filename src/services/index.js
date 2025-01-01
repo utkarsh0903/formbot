@@ -63,6 +63,17 @@ export const getFolder = (folderId) => {
     })
 }
 
+export const deleteFolder = (data) => {
+    return fetch(`${URL}/folder/delete-folder`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}
+
 export const createForm = (data) => {
     return fetch(`${URL}/form/create-form`, {
         method: 'POST',

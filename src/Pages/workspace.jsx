@@ -9,7 +9,9 @@ import {
   workspace,
   createForm,
   getFolder,
+  deleteFolder,
 } from "../services";
+import DeleteFolderModal from "../components/DeleteFolderModal";
 
 const Workspace = () => {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const Workspace = () => {
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [selectedWorkspace, setSelectedWorkspace] = useState("");
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false);
+  const [isDeleteFolderModalOpen, setIsDeleteFolderModalOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [folderData, setFolderData] = useState({
     folderName: "",
@@ -53,7 +56,6 @@ const Workspace = () => {
       setWorkspaceMenu(workspaces);
     } else {
       const data = await res.json(res);
-      console.log(data);
       alert(data.message);
     }
   };
@@ -86,7 +88,6 @@ const Workspace = () => {
       setActiveworkspace(data.workspace);
     } else {
       const data = await res.json(res);
-      console.log(data);
       alert(data.message);
     }
   };
@@ -97,9 +98,9 @@ const Workspace = () => {
     if (res.status === 200) {
       const data = await res.json(res);
       createWorkspace();
+      setIsFolderModalOpen(false);
     } else {
       const data = await res.json(res);
-      console.log(data);
       alert(data.message);
     }
   };
@@ -107,13 +108,12 @@ const Workspace = () => {
   const handleCreateForm = async (e) => {
     e.preventDefault();
     const res = await createForm(formData);
-    console.log(res);
     if (res.status === 200) {
       const data = await res.json(res);
       createWorkspace();
+      setIsFormModalOpen(false);
     } else {
       const data = await res.json(res);
-      console.log(data);
       alert(data.message);
     }
   };
@@ -126,10 +126,22 @@ const Workspace = () => {
       setActiveFolder(data);
     } else {
       const data = await res.json(res);
-      console.log(data);
       alert(data.message);
     }
   };
+
+  const handleDeleteFolder = async (e, folderData) => {
+    e.preventDefault();
+    console.log(folderData);
+    const res = await deleteFolder(folderData);
+    if (res.status === 200) {
+      createWorkspace();
+      setIsDeleteFolderModalOpen(false);
+    } else {
+      const data = await res.json(res);
+      alert(data.message);
+    }
+  }
 
   return (
     <div>
@@ -165,7 +177,8 @@ const Workspace = () => {
         <button onClick={() => setIsFolderModalOpen(true)}>
           <img src="" alt="" />
           <span>Create a folder</span>
-          {isFolderModalOpen && (
+        </button>
+        {isFolderModalOpen && (
             <CreateFolderModal
               activeWorkspaceId={activeWorkspace._id}
               folderData={folderData}
@@ -173,7 +186,15 @@ const Workspace = () => {
               handleCreateFolder={handleCreateFolder}
             />
           )}
-        </button>
+          {isDeleteFolderModalOpen && (
+            <DeleteFolderModal
+              activeWorkspaceId={activeWorkspace._id}
+              folderData={folderData}
+              folderName={activeFolder.folderName}
+              setIsDeleteFolderModalOpen={setIsDeleteFolderModalOpen}
+              handleDeleteFolder={handleDeleteFolder}
+            />
+          )}
         {activeWorkspace?.folder?.length > 0 &&
           activeWorkspace.folder.map((folder) => (
             <button
@@ -181,6 +202,7 @@ const Workspace = () => {
               onClick={() => openFolder(folder.folderId)}
             >
               {folder.folderName}
+              <p onClick={() => setIsDeleteFolderModalOpen(true)}>Delete</p>
             </button>
           ))}
       </div>
@@ -188,7 +210,8 @@ const Workspace = () => {
         <button onClick={() => setIsFormModalOpen(true)}>
           <img src="" alt="" />
           <span>Create a typebot</span>
-          {isFormModalOpen && (
+        </button>
+        {isFormModalOpen && (
             <CreateFormModal
               activeWorkspaceId={activeWorkspace._id}
               formData={formData}
@@ -196,7 +219,6 @@ const Workspace = () => {
               handleCreateForm={handleCreateForm}
             />
           )}
-        </button>
         {isFolderOpen ? (
           activeFolder?.form?.length > 0 ? (
             activeFolder.form.map((form) => (
