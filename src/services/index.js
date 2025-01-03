@@ -109,6 +109,16 @@ export const getForm = (formId) => {
     })
 }
 
+export const getSharedForm = (formId) => {
+    return fetch(`${URL}/form/sharedForm/${formId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(),
+    })
+}
+
 export const deleteForm = (data) => {
     return fetch(`${URL}/form/delete-form`, {
         method: 'DELETE',
