@@ -15,20 +15,30 @@ import email from "../assets/email.png";
 import text from "../assets/text.png";
 import ShareBtn from "../components/ShareBtn";
 import deleteBtn from "../assets/delete.png";
+import { addContentInForm } from "../services";
+import { useParams } from "react-router-dom";
 
 const Form = () => {
   const [shareBtnStatus, setShareBtnStatus] = useState(false);
+  const [isFormShareBtn, setIsFormShareBtn] = useState(true);
+  const [isFormTabActive, setIsFormTabActive] = useState(true);
   const [templates, setTemplates] = useState([]);
+  const { formId } = useParams();
 
   const handleAddTemplate = (type) => {
     setTemplates((prev) => [...prev, { id: Date.now(), type }]);
   };
 
   const renderTemplate = (template) => {
+    const { label, placeholder } = getLabel(template.type);
     return (
       <div key={template.id} className="new-template">
-        <label htmlFor={template.type}>{getLabel(template.type)}</label>
-        <input type="text" placeholder="Click here to edit" required />
+        <label htmlFor={label}>{label}</label>
+        {template.type == "bubbleText" || template.type == "bubbleImage" ? (
+          <input type="text" placeholder={placeholder} required />
+        ) : (
+          ""
+        )}
         <button onClick={() => handleDeleteTemplate(template.id)}>
           <img src={deleteBtn} alt="Delete" />
         </button>
@@ -38,20 +48,96 @@ const Form = () => {
 
   const getLabel = (type) => {
     const labels = {
-      bubbleText: "Bubble Text",
-      bubbleImage: "Bubble Image",
-      text: "Text Input",
-      number: "Number Input",
-      email: "Email Input",
-      phone: "Phone Input",
-      date: "Date Input",
-      rating: "Rating Input",
+      bubbleText: {
+        label: "Bubble Text",
+        category: "Bubbles",
+        placeholder: "Click here to edit",
+      },
+      bubbleImage: {
+        label: "Bubble Image",
+        category: "Bubbles",
+        placeholder: "Click to add link",
+      },
+      text: {
+        label: "Text Input",
+        category: "Inputs",
+        placeholder: "",
+      },
+      number: {
+        label: "Number Input",
+        category: "Inputs",
+        placeholder: "",
+      },
+      email: {
+        label: "Email Input",
+        category: "Inputs",
+        placeholder: "",
+      },
+      phone: {
+        label: "Phone Input",
+        category: "Inputs",
+        placeholder: "",
+      },
+      date: {
+        label: "Date Input",
+        category: "Inputs",
+        placeholder: "",
+      },
+      rating: {
+        label: "Rating Input",
+        category: "Inputs",
+        placeholder: "",
+      },
+      sendBtn: {
+        label: "Submit Button",
+        category: "Inputs",
+        placeholder: "",
+      },
     };
-    return labels[type] || "Unknown";
+
+    return (
+      labels[type] || {
+        label: "",
+        category: "",
+        placeholder: "",
+      }
+    );
   };
 
   const handleDeleteTemplate = (id) => {
     setTemplates((prev) => prev.filter((template) => template.id !== id));
+  };
+
+  const handleSaveBtn = async (e) => {
+    e.preventDefault();
+    setShareBtnStatus(true);
+    const formTemplate = templates.map((template) => ({
+      category: getLabel(template.type).category,
+      subCategory: getLabel(template.type).label,
+      label: getLabel(template.type).label,
+      labelData: getLabel(template.type).placeholder,
+    }));
+    const data = {
+      formId: formId,
+      formTemplate: formTemplate,
+    };
+    const res = await addContentInForm(data);
+
+    if (res.status === 200) {
+      const data = await res.json();
+      alert(data.message);
+    } else {
+      const data = await res.json(res);
+      alert(data.message);
+    }
+  };
+
+  const handleFlow = () => {
+    setIsFormTabActive(true);
+  };
+
+  const handleResponse = () => {
+    setIsFormTabActive(false);
   };
 
   return (
@@ -65,8 +151,15 @@ const Form = () => {
           />
         </div>
         <div className="navbar-list">
-          <button className="flow">Flow</button>
-          <button className="response">Response</button>
+          <button className="flow" onClick={() => handleFlow()}>
+            Flow
+          </button>
+          <button
+            className="response"
+            onClick={() => handleResponse()}
+          >
+            Response
+          </button>
         </div>
         <div className="navbar-btns">
           {/* <div className="theme-changer">
@@ -75,14 +168,19 @@ const Form = () => {
             {isDarkMode ? "Dark" : "Light"}
           </button>
         </div> */}
-          <ShareBtn btnStatus={shareBtnStatus} />
-          <button className="save-btn">Save</button>
+          <ShareBtn
+            btnStatus={shareBtnStatus}
+            isFormShareBtn={isFormShareBtn}
+          />
+          <button className="save-btn" onClick={(e) => handleSaveBtn(e)}>
+            Save
+          </button>
           <button className="close-btn">
             <img src={close} alt="Close Btn" />
           </button>
         </div>
       </div>
-      <div className="form-content">
+      {isFormTabActive ? <div className="form-content">
         <div className="leftbar">
           <h3 className="bubbles-title">Bubbles</h3>
           <div className="leftbar-btns">
@@ -124,7 +222,7 @@ const Form = () => {
               <img src={rating} alt="Rating" />
               Rating
             </button>
-            <button onClick={() => handleAddTemplate("bubbleText")}>
+            <button onClick={() => handleAddTemplate("sendBtn")}>
               <img src={sendBtn} alt="SendBtn" />
               Buttons
             </button>
@@ -139,7 +237,8 @@ const Form = () => {
             {templates.map((template) => renderTemplate(template))}
           </div>
         </div>
-      </div>
+      </div> : <div className="response-content">
+        <h1 className="no-response">No Response yet collected</h1></div>}
     </div>
   );
 };

@@ -238,3 +238,13 @@
     }
   }
 }
+
+.response-content{
+  .no-response{
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(105, 105, 105, 0.45);
+  }
+}

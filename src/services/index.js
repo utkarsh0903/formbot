@@ -1,5 +1,6 @@
 // const URL = 'http://localhost:5000/api'
 const URL = 'https://formbot-backend-4mge.onrender.com/api'
+
 export const register = (data) => {
     return fetch(`${URL}/user/register`, {
         method: 'POST',
@@ -133,6 +134,48 @@ export const createFormInFolder = (data) => {
 export const deleteFormInFolder = (data) => {
     return fetch(`${URL}/form/folder/delete-form`, {
         method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+export const addContentInForm = (data) => {
+    return fetch(`${URL}/form/form-content/${data.formId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+export const submitFormbot = (data) => {
+    return fetch(`${URL}/form/responses/${data.formId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+export const increaseFormCount = (data) => {
+    return fetch(`${URL}/form/responses/count/${data.formId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+export const showResponses = (data) => {
+    return fetch(`${URL}/form/${data.formId}/responses`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `${localStorage.getItem('token')}`
