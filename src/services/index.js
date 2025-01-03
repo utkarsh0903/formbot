@@ -110,7 +110,7 @@ export const getForm = (formId) => {
 }
 
 export const getSharedForm = (formId) => {
-    return fetch(`${URL}/form/sharedForm/${formId}`, {
+    return fetch(`${URL}/form/${formId}/formbot`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
