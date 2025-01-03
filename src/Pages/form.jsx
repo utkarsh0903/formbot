@@ -15,7 +15,7 @@ import email from "../assets/email.png";
 import text from "../assets/text.png";
 import ShareBtn from "../components/ShareBtn";
 import deleteBtn from "../assets/delete.png";
-import { addContentInForm } from "../services";
+import { addContentInForm, showResponses } from "../services";
 import { useParams } from "react-router-dom";
 
 const Form = () => {
@@ -24,6 +24,10 @@ const Form = () => {
   const [isFormTabActive, setIsFormTabActive] = useState(true);
   const [templates, setTemplates] = useState([]);
   const { formId } = useParams();
+  const [responses, setResponses] = useState([]);
+  const [visitCount, setVisitCount] = useState(0);
+  const [startCount, setStartCount] = useState(0);
+  const [submittedCount, setSubmittedCount] = useState(0);
 
   const handleAddTemplate = (type) => {
     setTemplates((prev) => [...prev, { id: Date.now(), type }]);
@@ -136,8 +140,20 @@ const Form = () => {
     setIsFormTabActive(true);
   };
 
-  const handleResponse = () => {
+  const handleResponse = async () => {
     setIsFormTabActive(false);
+    const res = await showResponses(formId);
+    if (res.status === 200) {
+      const data = await res.json();
+      setVisitCount(data.visitCount);
+      setStartCount(data.startCount);
+      setSubmittedCount(data.submittedCount);
+        
+      console.log(data);
+    } else {
+      const data = await res.json(res);
+      alert(data.message);
+    }
   };
 
   return (
@@ -154,10 +170,7 @@ const Form = () => {
           <button className="flow" onClick={() => handleFlow()}>
             Flow
           </button>
-          <button
-            className="response"
-            onClick={() => handleResponse()}
-          >
+          <button className="response" onClick={() => handleResponse()}>
             Response
           </button>
         </div>
@@ -180,65 +193,70 @@ const Form = () => {
           </button>
         </div>
       </div>
-      {isFormTabActive ? <div className="form-content">
-        <div className="leftbar">
-          <h3 className="bubbles-title">Bubbles</h3>
-          <div className="leftbar-btns">
-            <button onClick={() => handleAddTemplate("bubbleText")}>
-              <img src={bubbleText} alt="Bubble Text" /> Text
-            </button>
-            <button onClick={() => handleAddTemplate("bubbleImage")}>
-              <img src={bubbleImage} alt="Bubble Image" /> Image
-            </button>
-            <button>
-              <img src={video} alt="Video" /> Video
-            </button>
-            <button>
-              <img src={gif} alt="GIF" /> GIF
-            </button>
+      {isFormTabActive ? (
+        <div className="form-content">
+          <div className="leftbar">
+            <h3 className="bubbles-title">Bubbles</h3>
+            <div className="leftbar-btns">
+              <button onClick={() => handleAddTemplate("bubbleText")}>
+                <img src={bubbleText} alt="Bubble Text" /> Text
+              </button>
+              <button onClick={() => handleAddTemplate("bubbleImage")}>
+                <img src={bubbleImage} alt="Bubble Image" /> Image
+              </button>
+              <button>
+                <img src={video} alt="Video" /> Video
+              </button>
+              <button>
+                <img src={gif} alt="GIF" /> GIF
+              </button>
+            </div>
+            <h3 className="inputs-title">Inputs</h3>
+            <div className="leftbar-btns">
+              <button onClick={() => handleAddTemplate("text")}>
+                <img src={text} alt="Text" /> Text
+              </button>
+              <button onClick={() => handleAddTemplate("number")}>
+                <img src={number} alt="Number" />
+                Number
+              </button>
+              <button onClick={() => handleAddTemplate("email")}>
+                <img src={email} alt="Email" />
+                Email
+              </button>
+              <button onClick={() => handleAddTemplate("phone")}>
+                <img src={phone} alt="Phone" />
+                Phone
+              </button>
+              <button onClick={() => handleAddTemplate("date")}>
+                <img src={date} alt="Date" />
+                Date
+              </button>
+              <button onClick={() => handleAddTemplate("rating")}>
+                <img src={rating} alt="Rating" />
+                Rating
+              </button>
+              <button onClick={() => handleAddTemplate("sendBtn")}>
+                <img src={sendBtn} alt="SendBtn" />
+                Buttons
+              </button>
+            </div>
           </div>
-          <h3 className="inputs-title">Inputs</h3>
-          <div className="leftbar-btns">
-            <button onClick={() => handleAddTemplate("text")}>
-              <img src={text} alt="Text" /> Text
-            </button>
-            <button onClick={() => handleAddTemplate("number")}>
-              <img src={number} alt="Number" />
-              Number
-            </button>
-            <button onClick={() => handleAddTemplate("email")}>
-              <img src={email} alt="Email" />
-              Email
-            </button>
-            <button onClick={() => handleAddTemplate("phone")}>
-              <img src={phone} alt="Phone" />
-              Phone
-            </button>
-            <button onClick={() => handleAddTemplate("date")}>
-              <img src={date} alt="Date" />
-              Date
-            </button>
-            <button onClick={() => handleAddTemplate("rating")}>
-              <img src={rating} alt="Rating" />
-              Rating
-            </button>
-            <button onClick={() => handleAddTemplate("sendBtn")}>
-              <img src={sendBtn} alt="SendBtn" />
-              Buttons
-            </button>
+          <div className="right-content">
+            <div className="flag-starter">
+              <img src={flag} alt="Flag" />
+              <h3 className="start-flag">Start</h3>
+            </div>
+            <div className="new-templates-container">
+              {templates.map((template) => renderTemplate(template))}
+            </div>
           </div>
         </div>
-        <div className="right-content">
-          <div className="flag-starter">
-            <img src={flag} alt="Flag" />
-            <h3 className="start-flag">Start</h3>
-          </div>
-          <div className="new-templates-container">
-            {templates.map((template) => renderTemplate(template))}
-          </div>
+      ) : (
+        <div className="response-content">
+          <h1 className="no-response">No Response yet collected</h1>
         </div>
-      </div> : <div className="response-content">
-        <h1 className="no-response">No Response yet collected</h1></div>}
+      )}
     </div>
   );
 };

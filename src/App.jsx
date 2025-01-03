@@ -6,7 +6,7 @@ import Home from "./Pages/home.jsx";
 import Workspace from "./Pages/workspace.jsx";
 import Settings from "./Pages/settings.jsx";
 import Form from "./Pages/form.jsx";
-import Formbot from "./Pages/Formbot.jsx";
+import FormbotData from "./Pages/formbotData.jsx";
 
 function App() {
   
@@ -21,7 +21,7 @@ function App() {
       <Route path="/workspace/:workspaceId" element={<Workspace />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/form/:formId" element={<Form />} />
-      <Route path="/form/:formId/formbot" element={<Formbot />} />
+      <Route path="/form/:formId/formbot" element={<FormbotData />} />
       {/* <Route path="*" element={<NoPage />} /> */}
     </Routes>
     </BrowserRouter>
