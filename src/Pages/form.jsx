@@ -22,6 +22,7 @@ const Form = () => {
   const [shareBtnStatus, setShareBtnStatus] = useState(false);
   const [isFormShareBtn, setIsFormShareBtn] = useState(true);
   const [isFormTabActive, setIsFormTabActive] = useState(true);
+  const [isResponse, setIsRespone] = useState(false);
   const [templates, setTemplates] = useState([]);
   const { formId } = useParams();
   const [responses, setResponses] = useState([]);
@@ -148,8 +149,8 @@ const Form = () => {
       setVisitCount(data.visitCount);
       setStartCount(data.startCount);
       setSubmittedCount(data.submittedCount);
-        
-      console.log(data);
+        setResponses(data.responses);
+        setIsRespone(true);
     } else {
       const data = await res.json(res);
       alert(data.message);
@@ -254,7 +255,52 @@ const Form = () => {
         </div>
       ) : (
         <div className="response-content">
-          <h1 className="no-response">No Response yet collected</h1>
+          {!isResponse ? (
+            <h1 className="no-response">No Response yet collected</h1>
+          ) : (
+            <div className="form-responses">
+                <div className="response-stats">
+                    <div className="view-stat">
+                        <h2>Views</h2>
+                        <h3>{visitCount}</h3>
+                    </div>
+                    <div className="start-stat">
+                        <h2>Starts</h2>
+                        <h3>{startCount}</h3>
+                    </div>
+                </div>
+                <div className="responses-data">
+                    {console.log(responses)}
+                    {responses.map((response, index) => {
+                        
+                        return <div className="responses" key={index}>
+                             <h4>Submitted At :- {response.submittedAt}</h4>
+                        {Object.keys(response.data[0]).map((key, index) => {
+                            if (key === "_id" || key === "email" || key === "username") {
+                                return null; // Skip this key
+                            }
+                            const value = response.data[0][key]; // Get the value for the current key
+                            return (
+                                <div key={index}>
+                                    <h3 className="response-value">{key}: {value}</h3>
+                                </div>
+                            );
+                        })}
+                        </div>
+
+                    })}
+                </div>
+                <div className="submit-stats">
+                    <div className="pie-chart">
+
+                    </div>
+                    <div className="submission-percentage">
+                        <h2>Completion rate</h2>
+                        <h3>{submittedCount}</h3>
+                    </div>
+                </div>
+            </div>
+          )}
         </div>
       )}
     </div>
