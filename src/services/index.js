@@ -173,13 +173,12 @@ export const increaseFormCount = (data) => {
     })
 }
 
-export const showResponses = (data) => {
-    return fetch(`${URL}/form/${data.formId}/responses`, {
+export const showResponses = (formId) => {
+    return fetch(`${URL}/form/${formId}/responses`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(data),
+        }
     })
 }
