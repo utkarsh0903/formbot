@@ -4,7 +4,7 @@ import close from "../assets/close.png";
 import "../styles/shareBtn.css";
 import "../styles/form.css";
 
-const ShareBtn = ({ activeWorkspaceId, btnStatus }) => {
+const ShareBtn = ({ activeWorkspaceId, btnStatus, isFormShareBtn }) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [sharedMode, setSharedMode] = useState("edit");
   const [sharedEmail, setSharedEmail] = useState("");
@@ -52,7 +52,7 @@ const ShareBtn = ({ activeWorkspaceId, btnStatus }) => {
             >
               <img src={close} alt="Close Btn" />
             </button>
-            <div className="share-mode">
+            {!isFormShareBtn && <div className="share-mode">
               <h2>Invite by Email</h2>
               <select
                 name="sharedMode"
@@ -62,15 +62,15 @@ const ShareBtn = ({ activeWorkspaceId, btnStatus }) => {
                 <option value="edit">Edit</option>
                 <option value="view">View</option>
               </select>
-            </div>
-            <input
+            </div>}
+            {!isFormShareBtn && <input
               type="email"
               placeholder="Enter email id"
               onChange={(e) => setSharedEmail(e.target.value)}
-            />
-            <button className="send-btn" onClick={(e) => handleSendBtn()}>
+            />}
+            {!isFormShareBtn && <button className="send-btn" onClick={(e) => handleSendBtn()}>
               Send Invite
-            </button>
+            </button>}
             <h2>Invite by link</h2>
             <button className="copy-btn">Copy link</button>
           </div>

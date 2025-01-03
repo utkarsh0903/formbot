@@ -35,6 +35,8 @@ const Workspace = () => {
   const [isDeleteFolderModalOpen, setIsDeleteFolderModalOpen] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteFormModalOpen, setIsDeleteFormModalOpen] = useState(false);
+    const [shareBtnStatus, setShareBtnStatus] = useState(true);
+    const [isFormShareBtn, setIsFormShareBtn] = useState(false);
   const [folderData, setFolderData] = useState({
     folderName: "",
     activeWorkspaceId: "",
@@ -246,7 +248,7 @@ const Workspace = () => {
           <h4>Dark</h4>
         </div>
         <div className="share-button">
-          <ShareBtn activeWorkspaceId={activeWorkspace._id} btnStatus={"true"} />
+          <ShareBtn activeWorkspaceId={activeWorkspace._id} btnStatus={shareBtnStatus} isFormShareBtn={isFormShareBtn} />
         </div>
       </div>
       <div className="create-folder">
