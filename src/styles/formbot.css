@@ -1,0 +1,59 @@
+.formbot-container {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(24, 23, 28, 1);
+}
+
+.formbot-heading {
+  padding-top: 1em;
+  text-align: center;
+  color: whitesmoke;
+}
+
+.formbot-div {
+  div {
+    margin: 1em;
+    margin-bottom: 0;
+    padding-bottom: 1.5em;
+    display: flex;
+    align-items: center;
+    p {
+      background-color: rgba(5, 62, 196, 1);
+      display: inline;
+      padding: 0.6em 1em;
+      border-radius: 6px;
+    }
+    label {
+      margin-right: 0.6em;
+      color: whitesmoke;
+    }
+    input {
+      padding-left: 1em;
+      height: 4em;
+      width: 23em;
+      font-size: 0.7em;
+      border-radius: 6px;
+      background-color: rgba(255, 255, 255, 1);
+      border: none;
+      &::placeholder {
+        color: black;
+      }
+    }
+    button {
+      margin-left: 0.7em;
+      width: 5em;
+      height: 3.7em;
+      border-radius: 6px;
+      background-color: rgba(5, 62, 196, 1);
+      border: none;
+      img {
+        width: 1.5em;
+        height: 1.5em;
+      }
+    }
+  }
+}
+
+.form-submit-btn {
+  width: 15em !important;
+}
