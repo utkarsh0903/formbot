@@ -36,7 +36,7 @@ const ShareBtn = ({ activeWorkspaceId, btnStatus, isFormShareBtn }) => {
   };
 
   const handleCopyBtn = () => {
-    const linkToCopy =isFormShareBtn ? `${window.location.href}/formbot` : `${window.location.href}/${activeWorkspaceId}`;
+    const linkToCopy =isFormShareBtn ? `${window.location.origin}/formbot` : `${window.location.origin}/${activeWorkspaceId}`;
     navigator.clipboard.writeText(linkToCopy)
       .then(() => {
         alert("Link copied to clipboard!");
