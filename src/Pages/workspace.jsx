@@ -147,15 +147,20 @@ const Workspace = () => {
   };
 
   const openFolder = async (folderId) => {
-    setIsFolderOpen(!isFolderOpen);
-    const res = await getFolder(folderId);
-    if (res.status === 200) {
-      const data = await res.json(res);
-      setActiveFolder(data);
+    if (isFolderOpen) {
+      setActiveFolder({});
     } else {
-      const data = await res.json(res);
-      alert(data.message);
+      const res = await getFolder(folderId);
+      if (res.status === 200) {
+        const data = await res.json(res);
+        setActiveFolder(data);
+      } else {
+        const data = await res.json(res);
+        alert(data.message);
+      }
     }
+
+    setIsFolderOpen(!isFolderOpen);
   };
 
   const openForm = async (formId) => {
@@ -240,11 +245,10 @@ const Workspace = () => {
           <button>Change</button>
           <h4>Dark</h4>
         </div>
-        <div className="share-btn">
-          <ShareBtn activeWorkspaceId={activeWorkspace._id} />
+        <div className="share-button">
+          <ShareBtn activeWorkspaceId={activeWorkspace._id} btnStatus={"true"} />
         </div>
       </div>
-      <hr />
       <div className="create-folder">
         <button
           className="create-folder-btn"
@@ -273,7 +277,15 @@ const Workspace = () => {
         )}
         {activeWorkspace?.folder?.length > 0 &&
           activeWorkspace.folder.map((folder) => (
-            <div key={folder.folderId} className="folders">
+            <div
+              key={folder.folderId}
+              className="folders"
+              id={
+                activeFolder._id === folder.folderId
+                  ? "active-folder"
+                  : "inactive-folder"
+              }
+            >
               <button onClick={() => openFolder(folder.folderId)}>
                 {folder.folderName}
               </button>
@@ -310,13 +322,6 @@ const Workspace = () => {
             setIsDeleteFormModalOpen={setIsDeleteFormModalOpen}
             handleDeleteForm={handleDeleteForm}
           />
-          //   <DeleteFormModal
-          //     activeWorkspaceId={activeWorkspace._id}
-          //     formData={formData}
-          //     formName={activeForm.formName}
-          //     setIsDeleteFormModalOpen={setIsDeleteFormModalOpen}
-          //     handleDeleteForm={handleDeleteForm}
-          //   />
         )}
         {isFolderOpen ? (
           activeFolder?.form?.length > 0 ? (
@@ -350,13 +355,5 @@ const Workspace = () => {
     </div>
   );
 };
-
-// const Folder = () => {
-//   return <></>;
-// };
-
-// const Form = () => {
-//   return <></>;
-// };
 
 export default Workspace;

@@ -20,9 +20,11 @@ const DeleteFormModal = ({
   };
 
   return (
-    <div>
+    <div className="overlay">
+        <div className="container" id="delete-modal">
       <h2>Are you sure you want to delete this form ?</h2>
-      <button
+      <div className="modal-btns">
+      <button className="done-btn"
         onClick={(e) => {
           handleDelete(e);
         }}
@@ -30,7 +32,9 @@ const DeleteFormModal = ({
         Confirm
       </button>
       <span>|</span>
-      <button onClick={() => setIsDeleteFormModalOpen(false)}>Cancel</button>
+      <button className="cancel-btn" onClick={() => setIsDeleteFormModalOpen(false)}>Cancel</button>
+      </div>
+    </div>
     </div>
   );
 };
