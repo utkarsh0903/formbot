@@ -21,9 +21,9 @@ import { useParams } from "react-router-dom";
 const Form = () => {
   const [shareBtnStatus, setShareBtnStatus] = useState(false);
   const [isFormShareBtn, setIsFormShareBtn] = useState(true);
-  const [activeNavbar, setActiveNavbar] = useState("");
+  const [isFormTabActive, setIsFormTabActive] = useState(true);
   const [templates, setTemplates] = useState([]);
-  const {formId} = useParams();
+  const { formId } = useParams();
 
   const handleAddTemplate = (type) => {
     setTemplates((prev) => [...prev, { id: Date.now(), type }]);
@@ -115,12 +115,12 @@ const Form = () => {
       category: getLabel(template.type).category,
       subCategory: getLabel(template.type).label,
       label: getLabel(template.type).label,
-      labelData: getLabel(template.type).placeholder, 
+      labelData: getLabel(template.type).placeholder,
     }));
     const data = {
-        formId : formId,
-        formTemplate: formTemplate
-    }
+      formId: formId,
+      formTemplate: formTemplate,
+    };
     const res = await addContentInForm(data);
 
     if (res.status === 200) {
@@ -130,6 +130,14 @@ const Form = () => {
       const data = await res.json(res);
       alert(data.message);
     }
+  };
+
+  const handleFlow = () => {
+    setIsFormTabActive(true);
+  };
+
+  const handleResponse = () => {
+    setIsFormTabActive(false);
   };
 
   return (
@@ -143,8 +151,15 @@ const Form = () => {
           />
         </div>
         <div className="navbar-list">
-          <button className="flow" onClick={() => setActiveNavbar("flow")}>Flow</button>
-          <button className="response" onClick={() => setActiveNavbar("response")}>Response</button>
+          <button className="flow" onClick={() => handleFlow()}>
+            Flow
+          </button>
+          <button
+            className="response"
+            onClick={() => handleResponse()}
+          >
+            Response
+          </button>
         </div>
         <div className="navbar-btns">
           {/* <div className="theme-changer">
@@ -153,7 +168,10 @@ const Form = () => {
             {isDarkMode ? "Dark" : "Light"}
           </button>
         </div> */}
-          <ShareBtn btnStatus={shareBtnStatus} isFormShareBtn={isFormShareBtn} />
+          <ShareBtn
+            btnStatus={shareBtnStatus}
+            isFormShareBtn={isFormShareBtn}
+          />
           <button className="save-btn" onClick={(e) => handleSaveBtn(e)}>
             Save
           </button>
@@ -162,7 +180,7 @@ const Form = () => {
           </button>
         </div>
       </div>
-      <div className="form-content">
+      {isFormTabActive ? <div className="form-content">
         <div className="leftbar">
           <h3 className="bubbles-title">Bubbles</h3>
           <div className="leftbar-btns">
@@ -219,7 +237,8 @@ const Form = () => {
             {templates.map((template) => renderTemplate(template))}
           </div>
         </div>
-      </div>
+      </div> : <div className="response-content">
+        <h1 className="no-response">No Response yet collected</h1></div>}
     </div>
   );
 };

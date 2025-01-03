@@ -1,5 +1,6 @@
-const URL = 'http://localhost:5000/api'
-// const URL = 'https://formbot-backend-4mge.onrender.com/api'
+// const URL = 'http://localhost:5000/api'
+const URL = 'https://formbot-backend-4mge.onrender.com/api'
+
 export const register = (data) => {
     return fetch(`${URL}/user/register`, {
         method: 'POST',
