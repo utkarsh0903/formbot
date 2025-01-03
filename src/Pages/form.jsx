@@ -21,6 +21,7 @@ import { useParams } from "react-router-dom";
 const Form = () => {
   const [shareBtnStatus, setShareBtnStatus] = useState(false);
   const [isFormShareBtn, setIsFormShareBtn] = useState(true);
+  const [activeNavbar, setActiveNavbar] = useState("");
   const [templates, setTemplates] = useState([]);
   const {formId} = useParams();
 
@@ -142,8 +143,8 @@ const Form = () => {
           />
         </div>
         <div className="navbar-list">
-          <button className="flow">Flow</button>
-          <button className="response">Response</button>
+          <button className="flow" onClick={() => setActiveNavbar("flow")}>Flow</button>
+          <button className="response" onClick={() => setActiveNavbar("response")}>Response</button>
         </div>
         <div className="navbar-btns">
           {/* <div className="theme-changer">

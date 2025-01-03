@@ -157,6 +157,26 @@ export const submitFormbot = (data) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+export const increaseFormCount = (data) => {
+    return fetch(`${URL}/form/responses/count/${data.formId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+}
+
+export const showResponses = (data) => {
+    return fetch(`${URL}/form/${data.formId}/responses`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
             'Authorization': `${localStorage.getItem('token')}`
         },
         body: JSON.stringify(data),

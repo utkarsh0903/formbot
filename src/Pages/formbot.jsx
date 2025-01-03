@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getForm, submitFormbot } from "../services";
+import { getForm, increaseFormCount, submitFormbot } from "../services";
 import "../styles/formbot.css";
 import send from "../assets/send.png";
 
@@ -11,8 +11,12 @@ const Formbot = () => {
   const [rating, setRating] = useState(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [visitCount, setVisitCount] = useState(0);
+  const [startCount, setStartCount] = useState(0);
+  const [submittedCount, setSubmittedCount] = useState(0);
 
   useEffect(() => {
+    increaseCount("visit");
     getFormById(formId);
   }, []);
 
@@ -21,24 +25,54 @@ const Formbot = () => {
     if (res.status === 200) {
       const data = await res.json(res);
       setFormbotTemplate(data.template);
+      setVisitCount(data.visitCount || 0);
+      setStartCount(data.startCount || 0);
+      setSubmittedCount(data.submittedCount || 0);
     } else {
       const data = await res.json(res);
       alert(data.message);
     }
   };
 
+  const increaseCount = async (type) => {
+    const counts = {
+        visitCount: type === "visit" ? visitCount + 1 : visitCount,
+        startCount: type === "start" ? startCount + 1 : startCount,
+        submittedCount: type === "submitted" ? submittedCount + 1 : submittedCount,
+      };
+    const data = {formId, counts }
+    const res = await increaseFormCount(data);
+    if (res.status === 200) {
+      const data = await res.json();
+      setVisitCount(data.visitCount);
+      setStartCount(data.startCount);
+      setSubmittedCount(data.submittedCount);
+    } else {
+      console.error("Failed to update counts");
+    }
+  };
+
   const handleResponseChange = (key, value) => {
+    if (Object.keys(userResponses).length === 0) {
+      increaseCount("start");
+    }
     setUserResponses((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmitBtn = async () => {
-    const userFormResponses = {username: username, email: email,  userData: userResponses };
-    const data = { formId, userResponses:userFormResponses };
+    const userFormResponses = {
+      username: username,
+      email: email,
+      userData: userResponses,
+    };
+    const data = { formId, userResponses: userFormResponses };
     console.log(data);
     try {
       const res = await submitFormbot(data);
       if (res.status === 200) {
-        alert("Form submitted successfully!");
+        const data = await res.json();
+        alert(data.message);
+        increaseCount("submitted");
       } else {
         const data = await res.json();
         alert(data.message);
