@@ -9,25 +9,32 @@ const DeleteFolderModal = ({
 }) => {
   const handleDelete = (e) => {
     const data = {
-        ...folderData,
-        folderName: folderName,
-        activeWorkspaceId:activeWorkspaceId,
-      }
+      ...folderData,
+      folderName: folderName,
+      activeWorkspaceId: activeWorkspaceId,
+    };
     handleDeleteFolder(e, data);
   };
 
   return (
-    <div>
-      <h2>Are you sure you want to delete this folder ?</h2>
-      <button
-        onClick={(e) => {
-          handleDelete(e);
-        }}
-      >
-        Confirm
-      </button>
-      <span>|</span>
-      <button onClick={() => setIsDeleteFolderModalOpen(false)}>Cancel</button>
+    <div className="overlay">
+      <div className="container" id="delete-modal">
+        <h2>Are you sure you want to delete this folder ?</h2>
+        <div className="modal-btns">
+        <button
+        className="done-btn"
+          onClick={(e) => {
+            handleDelete(e);
+          }}
+        >
+          Confirm
+        </button>
+        <span>|</span>
+        <button className="cancel-btn" onClick={() => setIsDeleteFolderModalOpen(false)}>
+          Cancel
+        </button>
+        </div>
+      </div>
     </div>
   );
 };
