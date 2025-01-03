@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getForm, increaseFormCount, submitFormbot } from "../services";
+import { getSharedForm, increaseFormCount, submitFormbot } from "../services";
 import "../styles/formbot.css";
 import send from "../assets/send.png";
 
@@ -21,7 +21,7 @@ const FormbotData = () => {
   }, []);
 
   const getFormById = async (formId) => {
-    const res = await getForm(formId);
+    const res = await getSharedForm(formId);
     if (res.status === 200) {
       const data = await res.json(res);
       setFormbotTemplate(data.template);

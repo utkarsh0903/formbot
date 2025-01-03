@@ -277,9 +277,9 @@ const Form = () => {
                              <h4>Submitted At :- {response.submittedAt}</h4>
                         {Object.keys(response.data[0]).map((key, index) => {
                             if (key === "_id" || key === "email" || key === "username") {
-                                return null; // Skip this key
+                                return null;
                             }
-                            const value = response.data[0][key]; // Get the value for the current key
+                            const value = response.data[0][key];
                             return (
                                 <div key={index}>
                                     <h3 className="response-value">{key}: {value}</h3>
