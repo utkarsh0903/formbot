@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import "../styles/workspace.css";
 import { Link, useNavigate } from "react-router-dom";
 import CreateFolderModal from "../components/CreateFolderModal";
 import CreateFormModal from "../components/CreateFormModal";
@@ -18,6 +19,9 @@ import {
 import DeleteFolderModal from "../components/DeleteFolderModal";
 import DeleteFormModal from "../components/DeleteFormModal";
 import ShareBtn from "../components/ShareBtn";
+import folder from "../assets/folder.png";
+import plus from "../assets/plus.png";
+import deleteIcon from "../assets/delete.png";
 
 const Workspace = () => {
   const navigate = useNavigate();
@@ -205,8 +209,8 @@ const Workspace = () => {
   };
 
   return (
-    <div>
-      <div className="top-navbar">
+    <div className="workspace-container">
+      <div className="topp-navbar">
         <div className="workspace-btn">
           <select
             onChange={(e) => {
@@ -214,14 +218,21 @@ const Workspace = () => {
             }}
             value={selectedWorkspace}
             name="workspace"
+            className="select-btn"
           >
             {workspaceMenu.map((workspace, index) => (
-              <option key={index} value={workspace.owner.username}>
+              <option
+                className="option-btn"
+                key={index}
+                value={workspace.owner.username}
+              >
                 {workspace.owner.username} Workspace
               </option>
             ))}
             <option value="settings">Settings</option>
-            <option value="logout">Logout</option>
+            <option value="logout" id="logout-btn">
+              Logout
+            </option>
           </select>
         </div>
         <div className="theme-changer">
@@ -234,9 +245,12 @@ const Workspace = () => {
         </div>
       </div>
       <hr />
-      <div className="create-folder-btn">
-        <button onClick={() => setIsFolderModalOpen(true)}>
-          <img src="" alt="" />
+      <div className="create-folder">
+        <button
+          className="create-folder-btn"
+          onClick={() => setIsFolderModalOpen(true)}
+        >
+          <img src={folder} alt="Folder" />
           <span>Create a folder</span>
         </button>
         {isFolderModalOpen && (
@@ -259,19 +273,22 @@ const Workspace = () => {
         )}
         {activeWorkspace?.folder?.length > 0 &&
           activeWorkspace.folder.map((folder) => (
-            <div key={folder.folderId}>
+            <div key={folder.folderId} className="folders">
               <button onClick={() => openFolder(folder.folderId)}>
                 {folder.folderName}
               </button>
               <button onClick={() => handleDeleteFolderBtn(folder.folderId)}>
-                Delete
+                <img src={deleteIcon} alt="Delete Icon" />
               </button>
             </div>
           ))}
       </div>
-      <div className="create-form-btn">
-        <button onClick={() => setIsFormModalOpen(true)}>
-          <img src="" alt="" />
+      <div className="create-form">
+        <button
+          className="create-form-btn"
+          onClick={() => setIsFormModalOpen(true)}
+        >
+          <img src={plus} alt="Plus" />
           <span>Create a typebot</span>
         </button>
         {isFormModalOpen && (
@@ -304,12 +321,12 @@ const Workspace = () => {
         {isFolderOpen ? (
           activeFolder?.form?.length > 0 ? (
             activeFolder.form.map((form) => (
-              <div key={form.formId}>
+              <div key={form.formId} className="forms">
                 <button onClick={() => navigate(`/form/${form.formId}`)}>
                   {form.formName}
                 </button>
                 <button onClick={() => handleDeleteFormBtn(form.formId)}>
-                  Delete
+                  <img src={deleteIcon} alt="Delete Icon" />
                 </button>
               </div>
             ))
@@ -319,12 +336,12 @@ const Workspace = () => {
         ) : (
           activeWorkspace?.form?.length > 0 &&
           activeWorkspace.form.map((form) => (
-            <div key={form.formId}>
+            <div key={form.formId} className="forms">
               <button onClick={() => navigate(`/form/${form.formId}`)}>
                 {form.formName}
               </button>
               <button onClick={() => handleDeleteFormBtn(form.formId)}>
-                Delete
+                <img src={deleteIcon} alt="Delete Icon" />
               </button>
             </div>
           ))
@@ -334,12 +351,12 @@ const Workspace = () => {
   );
 };
 
-const Folder = () => {
-  return <></>;
-};
+// const Folder = () => {
+//   return <></>;
+// };
 
-const Form = () => {
-  return <></>;
-};
+// const Form = () => {
+//   return <></>;
+// };
 
 export default Workspace;
