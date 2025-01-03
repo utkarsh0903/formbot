@@ -4,7 +4,7 @@ import close from "../assets/close.png";
 import "../styles/shareBtn.css";
 import "../styles/form.css";
 
-const ShareBtn = ({ activeWorkspaceId, btnStatus, isFormShareBtn }) => {
+const ShareBtn = ({ activeWorkspaceId, btnStatus, isFormShareBtn, activeFormId }) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [sharedMode, setSharedMode] = useState("edit");
   const [sharedEmail, setSharedEmail] = useState("");
@@ -36,7 +36,7 @@ const ShareBtn = ({ activeWorkspaceId, btnStatus, isFormShareBtn }) => {
   };
 
   const handleCopyBtn = () => {
-    const linkToCopy =isFormShareBtn ? `${window.location.origin}/formbot` : `${window.location.origin}/${activeWorkspaceId}`;
+    const linkToCopy =isFormShareBtn ? `${window.location.origin}/form/${activeFormId}/formbot` : `${window.location.origin}/${activeWorkspaceId}`;
     navigator.clipboard.writeText(linkToCopy)
       .then(() => {
         alert("Link copied to clipboard!");

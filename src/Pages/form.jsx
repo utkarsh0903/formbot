@@ -183,6 +183,7 @@ const Form = () => {
           </button>
         </div> */}
           <ShareBtn
+          activeFormId={formId}
             btnStatus={shareBtnStatus}
             isFormShareBtn={isFormShareBtn}
           />
