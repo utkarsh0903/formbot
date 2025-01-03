@@ -151,3 +151,14 @@ export const addContentInForm = (data) => {
         body: JSON.stringify(data),
     })
 }
+
+export const submitFormbot = (data) => {
+    return fetch(`${URL}/form/responses/${data.formId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data),
+    })
+}

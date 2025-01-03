@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getForm } from "../services";
+import { getForm, submitFormbot } from "../services";
 import "../styles/formbot.css";
 import send from "../assets/send.png";
 
@@ -9,6 +9,8 @@ const Formbot = () => {
   const [formbotTemplate, setFormbotTemplate] = useState([]);
   const [userResponses, setUserResponses] = useState({});
   const [rating, setRating] = useState(null);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     getFormById(formId);
@@ -18,11 +20,32 @@ const Formbot = () => {
     const res = await getForm(formId);
     if (res.status === 200) {
       const data = await res.json(res);
-      console.log(data.template);
       setFormbotTemplate(data.template);
     } else {
       const data = await res.json(res);
       alert(data.message);
+    }
+  };
+
+  const handleResponseChange = (key, value) => {
+    setUserResponses((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleSubmitBtn = async () => {
+    const userFormResponses = {username: username, email: email,  userData: userResponses };
+    const data = { formId, userResponses:userFormResponses };
+    console.log(data);
+    try {
+      const res = await submitFormbot(data);
+      if (res.status === 200) {
+        alert("Form submitted successfully!");
+      } else {
+        const data = await res.json();
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Failed to submit form.");
     }
   };
 
@@ -41,7 +64,11 @@ const Formbot = () => {
           return (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <label>{label}</label>
-              <input type="text" placeholder="Enter your text" />
+              <input
+                type="text"
+                placeholder="Enter your text"
+                onChange={(e) => handleResponseChange(label, e.target.value)}
+              />
               <button>
                 <img src={send} alt="Send" />
               </button>
@@ -51,7 +78,11 @@ const Formbot = () => {
           return (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <label>{label}</label>
-              <input type="email" placeholder="Enter your email" />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                onChange={(e) => handleResponseChange(label, e.target.value)}
+              />
               <button>
                 <img src={send} alt="Send" />
               </button>
@@ -61,7 +92,11 @@ const Formbot = () => {
           return (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <label>{label}</label>
-              <input type="number" placeholder="Enter a number" />
+              <input
+                type="number"
+                placeholder="Enter a number"
+                onChange={(e) => handleResponseChange(label, e.target.value)}
+              />
               <button>
                 <img src={send} alt="Send" />
               </button>
@@ -71,7 +106,11 @@ const Formbot = () => {
           return (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <label>{label}</label>
-              <input type="tel" placeholder="Enter your phone" />
+              <input
+                type="tel"
+                placeholder="Enter your phone"
+                onChange={(e) => handleResponseChange(label, e.target.value)}
+              />
               <button>
                 <img src={send} alt="Send" />
               </button>
@@ -81,7 +120,11 @@ const Formbot = () => {
           return (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <label>{label}</label>
-              <input type="date" placeholder="Select a date" />
+              <input
+                type="date"
+                placeholder="Select a date"
+                onChange={(e) => handleResponseChange(label, e.target.value)}
+              />
               <button>
                 <img src={send} alt="Send" />
               </button>
@@ -95,7 +138,10 @@ const Formbot = () => {
                 {[1, 2, 3, 4, 5].map((number) => (
                   <span
                     key={number}
-                    onClick={() => setRating(number)}
+                    onClick={() => {
+                      setRating(number);
+                      handleResponseChange(label, number);
+                    }}
                     style={{
                       cursor: "pointer",
                       fontSize: "20px",
@@ -121,7 +167,12 @@ const Formbot = () => {
         case "Submit Button":
           return (
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <button className="form-submit-btn">{label}</button>
+              <button
+                className="form-submit-btn"
+                onClick={() => handleSubmitBtn()}
+              >
+                {label}
+              </button>
             </div>
           );
         default:
@@ -134,6 +185,24 @@ const Formbot = () => {
   return (
     <div className="formbot-container">
       <h2 className="formbot-heading">Formbot</h2>
+      <div className="formbot-user-info">
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          value={email}
+          placeholder="Enter your email"
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
       {formbotTemplate.map((template, index) => (
         <div key={index} className="formbot-div">
           {renderTemplate(template)}
