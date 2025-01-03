@@ -35,6 +35,18 @@ const ShareBtn = ({ activeWorkspaceId, btnStatus, isFormShareBtn }) => {
     }
   };
 
+  const handleCopyBtn = () => {
+    const linkToCopy =isFormShareBtn ? `${window.location.href}/formbot` : `${window.location.href}/${activeWorkspaceId}`;
+    console.log(linkToCopy)
+    navigator.clipboard.writeText(linkToCopy)
+      .then(() => {
+        alert("Link copied to clipboard!");
+      })
+      .catch(() => {
+        alert("Failed to copy the link.");
+      });
+  };
+
   return (
     <div>
       <button
@@ -72,7 +84,7 @@ const ShareBtn = ({ activeWorkspaceId, btnStatus, isFormShareBtn }) => {
               Send Invite
             </button>}
             <h2>Invite by link</h2>
-            <button className="copy-btn">Copy link</button>
+            <button className="copy-btn" onClick={() => handleCopyBtn()}>Copy link</button>
           </div>
         </div>
       )}
